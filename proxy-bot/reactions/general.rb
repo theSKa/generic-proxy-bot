@@ -4,7 +4,6 @@ module ProxyBot
       @@puppeteer_id = ENV['PUPETEER_ID']
 
       def self.extract_message_data(data)
-        binding.pry
         submatch = /^say&gt;\s?\<(?<imtype>[#@])(?<recipient>[\w-]*)\> (?<message>.*)/.match(data.text)
         url_matcher = /(\<(https?:\/\/[\S]+)\>)/
         link_match = url_matcher.match(submatch['message'])
@@ -18,7 +17,6 @@ module ProxyBot
       end
 
       match /(.)*/ do |client, data, match|
-        binding.pry
         puppeteer_channel = client.web_client.im_open user: @@puppeteer_id
         user_info = client.web_client.users_info user: data.user
         text = "@#{user_info.user.name} says:\n--\n```\n#{data.text}\n```"
